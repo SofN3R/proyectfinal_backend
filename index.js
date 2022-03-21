@@ -8,6 +8,7 @@ connect_DB(); // Function connection db
 app.use(express.json());
 
 app.use( '/api/entry', require('./Routes/Entry/getPrivateTrips') );
+app.use( '/api/prueba', require('./Routes/Entry/pruebaRoute') );
 
 app.listen(3000, () => {
   console.log("App running in: http://127.0.0.0:3000")

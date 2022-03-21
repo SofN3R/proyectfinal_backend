@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-
-
 const tripSchema = mongoose.Schema({
 
   name:{
@@ -45,7 +43,21 @@ const tripSchema = mongoose.Schema({
 });
 
 
+const userSchema = mongoose.Schema({
+
+  name: {
+    type: String,
+    require: true
+  },
+  age: {
+    type: Number,
+    require: true
+  },
+  private_trips: [tripSchema],
+
+});
 
 
-module.exports = mongoose.model('newtrip', tripSchema);
 
+// module.exports = mongoose.model('NewTrip', tripSchema);
+const author = new mongoose.model('Autor', tripSchema);
