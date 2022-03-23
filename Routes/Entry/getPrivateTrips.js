@@ -8,4 +8,6 @@ router.get('/', privTripsControl.consultPrivTrips);
 
 router.post('/', privTripsControl.newPrivTrip);
 
+router.put('/:id',  privTripsControl.updatePrivTrips);
+
 module.exports = router;

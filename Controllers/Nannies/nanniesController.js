@@ -15,6 +15,7 @@ exports.showNannies = async(req, res) => {
 exports.showNanniesById = async(req, res) =>{
     try {
       const count = req.body.country.toLowerCase();
+      console.log(count);
       const dataNanniesId = await Nannies.find({ country: count, disp: true });
       res.json(dataNanniesId);
 

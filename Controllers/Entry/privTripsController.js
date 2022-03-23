@@ -45,11 +45,46 @@ exports.newPrivTrip = async(req, res) => {
 
     await User.findOneAndUpdate( id_user, update, options );
 
-    res.status(200).send('Updated successfully');
+    res.status(200).send('Created successfully');
 
   } catch (error) {
     console.log( error );
     res.status(500).send("Oops! Error");
+  }
+}
+
+
+exports.updatePrivTrips = async(req, res) => {
+  try{
+
+    const data_trip = await User.updateOne( { "._id": '6238e18b52496abe55025a40', "privatetrips._id": '623ad401e754ce1a0ee94a09' },
+      {
+
+        $set: {
+
+          "privatetrips.$.name": req.body.name,
+          "privatetrips.$.origin": req.body.origin,
+          "privatetrips.$.destiny": req.body.destiny,
+          "privatetrips.$.date": req.body.date,
+          "privatetrips.$.passengers": req.body.passengers,
+          "privatetrips.$.budget": req.body.budget,
+          "privatetrips.$.wishlist": req.body.wishlist,
+          "privatetrips.$.nannies": req.body.nannies,
+
+        }
+
+
+      }
+
+    );
+
+    res.json(data_trip);
+
+
+
+
+  } catch (error) {
+    console.log(error);
   }
 }
 
