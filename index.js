@@ -7,12 +7,11 @@ const cors = require('cors');
 const app = express(); // Const 4 use express
 connect_DB(); // Function connection db
 
-app.use(cors()); 
+app.use(cors());
 
 app.use(express.json());
 
 app.use( '/api/entry', require('./Routes/Entry/getPrivateTrips') );
-app.use( '/api/prueba', require('./Routes/Entry/pruebaRoute') );
 
 app.use('/api/nannies', require('./Routes/nannies/nannies'));
 

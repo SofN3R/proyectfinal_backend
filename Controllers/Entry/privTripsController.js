@@ -1,10 +1,10 @@
-const Trips = require('../../Models/privTrips');
+
 const User = require('../../Models/User');
 // GET TRIPS
 exports.consultPrivTrips = async(req, res) => {
   try {
 
-    const data_trip = await User.findById( '6238750c52496abe55025a3f' );
+    const data_trip = await User.findById( '6238e18b52496abe55025a40' );
     res.json( data_trip.privatetrips );
 
   } catch (error) {
@@ -17,25 +17,27 @@ exports.newPrivTrip = async(req, res) => {
   try {
 
     let id_user = {
-      _id: '6238750c52496abe55025a3f' // falta traer id del usuario que inicia sesión
+      _id: '6238e18b52496abe55025a40' // falta traer id del usuario que inicia sesión
     }
 
     let options = {
       strict: false
     }
 
+    let wish = req.body.wishlist.split(/\n/);
+
     let update = {
 
       $push: {
         privatetrips: {
           name: req.body.name,
-          origin: req.body.origen,
-          destiny: req.body.destino,
-          date: req.body.fecha,
-          passengers: req.body.num_pasajeros,
-          budget: req.body.presupuesto,
-          wishlist: req.body.lista_deseos,
-          nannies: req.body.niñeras
+          origin: req.body.origin,
+          destiny: req.body.destiny,
+          date: req.body.date,
+          passengers: req.body.passengers,
+          budget: req.body.budget,
+          wishlist: wish,
+          nannies: req.body.nannies
         }
       }
     }
