@@ -4,10 +4,10 @@ const router = express.Router();
 
 const showNannies = require('../../Controllers/Nannies/nanniesController');
 
-router.get('/', showNannies.showNannies)
-router.get('/:id', showNannies.showNanniesById)
+router.get('/', showNannies.showNannies);
+router.get('/country', showNannies.showNanniesById);
 
 
 
 
-module.exports = router; 
+module.exports = router;
