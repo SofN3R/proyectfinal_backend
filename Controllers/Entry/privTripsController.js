@@ -4,7 +4,7 @@ const User = require('../../Models/User');
 exports.consultPrivTrips = async(req, res) => {
   try {
 
-    const data_trip = await User.findById( '6238e18b52496abe55025a40' );
+    const data_trip = await User.findById( '623c7d958b2e998c352c29c9' );
     res.json( data_trip.privatetrips );
 
   } catch (error) {
@@ -13,11 +13,33 @@ exports.consultPrivTrips = async(req, res) => {
   }
 }
 
+exports.getTripById = async(req, res) => {
+
+  try {
+
+    const data_trip = await User.findById( '623c7d958b2e998c352c29c9' );
+
+    for(let i in data_trip.privatetrips){
+      if(data_trip.privatetrips[i]._id == req.params.id){
+        res.json(data_trip.privatetrips[i]);
+      }
+    }
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Oops! Error");
+  }
+
+}
+
+
+// POST
 exports.newPrivTrip = async(req, res) => {
   try {
 
     let id_user = {
-      _id: '6238e18b52496abe55025a40' // falta traer id del usuario que inicia sesión
+      _id: '623c7d958b2e998c352c29c9' // falta traer id del usuario que inicia sesión
     }
 
     let options = {
@@ -45,7 +67,7 @@ exports.newPrivTrip = async(req, res) => {
 
     await User.findOneAndUpdate( id_user, update, options );
 
-    res.status(200).send('Created successfully');
+    res.status(201).send('Created successfully');
 
   } catch (error) {
     console.log( error );
@@ -54,10 +76,13 @@ exports.newPrivTrip = async(req, res) => {
 }
 
 
+// PUT
 exports.updatePrivTrips = async(req, res) => {
   try{
 
-    const data_trip = await User.updateOne( { "._id": '6238e18b52496abe55025a40', "privatetrips._id": '623ad401e754ce1a0ee94a09' },
+    let wish = req.body.wishlist.split(/\n/);
+
+    const data_trip = await User.updateOne( { "._id": '6238e18b52496abe55025a40', "privatetrips._id": '623c7e8ae9fc12d770cb36a0' },
       {
 
         $set: {
@@ -68,7 +93,7 @@ exports.updatePrivTrips = async(req, res) => {
           "privatetrips.$.date": req.body.date,
           "privatetrips.$.passengers": req.body.passengers,
           "privatetrips.$.budget": req.body.budget,
-          "privatetrips.$.wishlist": req.body.wishlist,
+          "privatetrips.$.wishlist": req.body.wish,
           "privatetrips.$.nannies": req.body.nannies,
 
         }
@@ -78,7 +103,7 @@ exports.updatePrivTrips = async(req, res) => {
 
     );
 
-    res.json(data_trip);
+    res.status(200).send('Update Successfully');
 
 
 
