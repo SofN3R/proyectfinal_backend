@@ -15,8 +15,8 @@ exports.CreateTourismPlan = async(req, res)=>{
 }
 exports.VisualizerTourismPlans = async(req, res)=>{
     try {
-        const get_plan = await Tourism_plan.find({Active : 1});
-        res.json(get_plan)
+        const get_plans = await Tourism_plan.find({Active : 1});
+        res.json(get_plans)
     } catch (error) {
         console.error(error);
         res.status(500).send("Error 500");
@@ -24,23 +24,32 @@ exports.VisualizerTourismPlans = async(req, res)=>{
 }
 exports.VisualizerTourismPlan = async(req, res )=>{
     try {
-        const get_plans = await Tourism_plan.find(req.param.id);
-        if (!get_plans) {
+        
+        const get_plan = await Tourism_plan.findById(req.params.id);
+        if (!get_plan) {
             res.status(404).send("Registro no fue encontrado")
+        }else{
+
+            res.json(get_plan);
         }
-        res.json(get_plans);
     } catch (error) {
         console.error(error);
         res.status(500).send("Error 500")
     }
 }
 
-exports.EditTourismPlan = async(req, res) => {
-try {
-    
-} catch (error) {
-    
-}
+// exports.EditTourismPlan = async(req, res) => {
+// try {
+//     const EditPlan = await Tourism_plan.find(req.param.id);
+//     if (!EditPlan) {
+//         console.log("No aparece registro");
+//     }else{
+//         res.json(EditPlan);
+//     }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send("Error 500")
+//     }
 
-};
+// };
 

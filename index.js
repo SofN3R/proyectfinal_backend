@@ -7,6 +7,7 @@ app.use(express.json());
 
 app.use( '/api/entry', require('./Routes/Entry/getPrivateTrips') );
 app.use('/api/plan', require('./Routes/TourismPlan'));
+app.use('/api/newuser', require('./Routes/Users'));
 
 
 app.listen(3000, () => {

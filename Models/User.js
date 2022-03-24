@@ -1,32 +1,30 @@
 const mongoose = require('mongoose');
-
-
 const userSchema = mongoose.Schema({
 
-  Name: {
+  name: {
     type: String,
     require: true
   },
-  Lastname:{
+  lastname:{
     type: String,
     require: true,
   },
-  Email:{
+  email:{
     type: String,
     require : true,
   },
-  Telephone:{
+  telephone:{
     type : Number,
     require : true,
 
   },
-  Password:{
+  password:{
     type:String,
     require: true
 
   },
-  Role:{
-    type : Date,
+  role:{
+    type : String,
     require : true,
 
   },
@@ -37,7 +35,7 @@ const userSchema = mongoose.Schema({
   //   require: true
   // },
 
-  Date_cre:{
+  date_cre:{
     type: Date,
     default: Date.now()
 

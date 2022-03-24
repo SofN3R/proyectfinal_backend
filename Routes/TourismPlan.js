@@ -4,9 +4,10 @@ const TourismPlanController = require("../Controllers/TourismPlanController");
 
 
 
-router.get("/:id", TourismPlanController.VisualizerTourismPlan);
-router.get("/", TourismPlanController.VisualizerTourismPlans);
 router.post("/", TourismPlanController.CreateTourismPlan);
+router.get("/", TourismPlanController.VisualizerTourismPlans);
+router.get("/:id", TourismPlanController.VisualizerTourismPlan);
+// router.put("/:id", TourismPlanController.EditTourismPlan);
 
 
 module.exports = router;
