@@ -4,7 +4,7 @@ const User = require('../../Models/User');
 exports.consultPrivTrips = async(req, res) => {
   try {
 
-    const data_trip = await User.findById( '6238e18b52496abe55025a40' );
+    const data_trip = await User.findById( '623d5b76479555499a43afb4' );
     res.json( data_trip.privatetrips );
 
   } catch (error) {
@@ -13,11 +13,33 @@ exports.consultPrivTrips = async(req, res) => {
   }
 }
 
+exports.getTripById = async(req, res) => {
+
+  try {
+
+    const data_trip = await User.findById( '623d5b76479555499a43afb4' );
+
+    for(let i in data_trip.privatetrips){
+      if(data_trip.privatetrips[i]._id == req.params.id){
+        res.json(data_trip.privatetrips[i]);
+      }
+    }
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Oops! Error");
+  }
+
+}
+
+
+// POST
 exports.newPrivTrip = async(req, res) => {
   try {
 
     let id_user = {
-      _id: '6238e18b52496abe55025a40' // falta traer id del usuario que inicia sesión
+      _id: '623d5b76479555499a43afb4' // falta traer id del usuario que inicia sesión
     }
 
     let options = {
@@ -33,23 +55,64 @@ exports.newPrivTrip = async(req, res) => {
           name: req.body.name,
           origin: req.body.origin,
           destiny: req.body.destiny,
-          date: req.body.date,
+          startDate: req.body.startDate,
+          endDate: req.body.endDate,
           passengers: req.body.passengers,
           budget: req.body.budget,
           wishlist: wish,
-          nannies: req.body.nannies
+          // wishlist: req.body.wishlist,
+          // nannies: req.body.nannies
         }
       }
     }
 
 
-    await User.findOneAndUpdate( id_user, update, options );
+    const newT = await User.findOneAndUpdate( id_user, update, options );
 
-    res.status(200).send('Updated successfully');
+    res.status(201).json(newT);
 
   } catch (error) {
     console.log( error );
     res.status(500).send("Oops! Error");
+  }
+}
+
+
+// PUT
+exports.updatePrivTrips = async(req, res) => {
+  try{
+
+    // let wish = req.body.wishlist.split(/\n/);
+
+    const data_trip = await User.updateOne( { "._id": '623d5b76479555499a43afb4', "privatetrips._id": req.params.id },
+      {
+
+        $set: {
+
+          "privatetrips.$.name": req.body.name,
+          "privatetrips.$.origin": req.body.origin,
+          "privatetrips.$.destiny": req.body.destiny,
+          "privatetrips.$.startDate": req.body.startDate,
+          "privatetrips.$.endDate": req.body.endDate,
+          "privatetrips.$.passengers": req.body.passengers,
+          "privatetrips.$.budget": req.body.budget,
+          "privatetrips.$.wishlist": req.body.wishlist,
+          // "privatetrips.$.nannies": req.body.nannies,
+
+        }
+
+
+      }
+
+    );
+
+    res.status(200).json(data_trip);
+
+
+
+
+  } catch (error) {
+    console.log(error);
   }
 }
 
