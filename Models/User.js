@@ -32,12 +32,12 @@ const userSchema = mongoose.Schema({
 
   },
 
-  
+
   date_cre:{
     type: Date,
     default: Date.now()
 
-  }
+  },
 
 
   privatetrips: [

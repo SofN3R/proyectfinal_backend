@@ -1,7 +1,6 @@
 const express = require('express'); // Use express library
 const connect_DB = require('./config/db'); // Call file connect
 
-const cors = require('cors');
 
 
 const app = express(); // Const 4 use express

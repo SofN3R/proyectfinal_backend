@@ -1,4 +1,3 @@
-const { find } = require('../Models/User');
 const User = require('../Models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
@@ -14,7 +13,7 @@ exports.CreateUser = async(req, res,)=>{
             const accessToken = jwt.sign({id: NewUser.id},
                 key,{
                     expiresIn : expiresIn
-                });    
+                });
                 const responseuser ={
                     name: NewUser.name,
                     lastname : NewUser.lastname,
@@ -24,7 +23,7 @@ exports.CreateUser = async(req, res,)=>{
                     expiresIn : expiresIn
                 }
                 res.send(responseuser)
-    
+
 
     } catch (error) {
         console.error(error);
