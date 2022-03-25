@@ -1,8 +1,10 @@
 const express = require('express'); // Use express library
 const connect_DB = require('./config/db'); // Call file connect
 const app = express(); // Const 4 use express
+const cors = require('cors');
 connect_DB(); // Function connection db
 
+app.use(cors())
 app.use(express.json());
 
 app.use( '/api/entry', require('./Routes/Entry/getPrivateTrips') );
