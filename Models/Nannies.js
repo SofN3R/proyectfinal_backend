@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { boolean } = require('webidl-conversions');
+
 
 const nanniesSchema = mongoose.Schema({
     name: {
@@ -43,8 +43,9 @@ const nanniesSchema = mongoose.Schema({
         default: Date.now
     },
     available: {
-        type: Boolean,
-        require: true
+      type: Boolean,
+      require: true
+
     }
 });
 

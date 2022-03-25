@@ -1,13 +1,11 @@
-const Trips = require('../../Models/privTrips');
-const User = require('../../Models/User');
 
+const User = require('../../Models/User');
 // GET TRIPS
 exports.consultPrivTrips = async(req, res) => {
   try {
 
-    const data_trip = await Trips.find();
-
-    res.json( data_trip );
+    const data_trip = await User.findById( '623d5b76479555499a43afb4' );
+    res.json( data_trip.privatetrips );
 
   } catch (error) {
     console.log( error );
@@ -15,30 +13,106 @@ exports.consultPrivTrips = async(req, res) => {
   }
 }
 
+exports.getTripById = async(req, res) => {
+
+  try {
+
+    const data_trip = await User.findById( '623d5b76479555499a43afb4' );
+
+    for(let i in data_trip.privatetrips){
+      if(data_trip.privatetrips[i]._id == req.params.id){
+        res.json(data_trip.privatetrips[i]);
+      }
+    }
+
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Oops! Error");
+  }
+
+}
+
+
+// POST
 exports.newPrivTrip = async(req, res) => {
   try {
 
-    let exa = req.body;
-    // {"_id": 4}
-    User.find( (err, lib) => {
+    let id_user = {
+      _id: '623d5b76479555499a43afb4' // falta traer id del usuario que inicia sesión
+    }
+
+    let options = {
+      strict: false
+    }
+
+    let wish = req.body.wishlist.split(/\n/);
+
+    let update = {
+
+      $push: {
+        privatetrips: {
+          name: req.body.name,
+          origin: req.body.origin,
+          destiny: req.body.destiny,
+          startDate: req.body.startDate,
+          endDate: req.body.endDate,
+          passengers: req.body.passengers,
+          budget: req.body.budget,
+          wishlist: wish,
+          // wishlist: req.body.wishlist,
+          // nannies: req.body.nannies
+        }
+      }
+    }
 
 
-      // let data_newTrip = new Trips(req.body);
-      // await data_newTrip.save();
-      Trips.populate(exa, { path: 'user' }, (err, libros) => {
-        console.log("Creando API");
-        res.status(200).send(libros);
-      });
+    const newT = await User.findOneAndUpdate( id_user, update, options );
 
-
-
-    } );
-
-
+    res.status(201).json(newT);
 
   } catch (error) {
     console.log( error );
     res.status(500).send("Oops! Error");
+  }
+}
+
+
+// PUT
+exports.updatePrivTrips = async(req, res) => {
+  try{
+
+    // let wish = req.body.wishlist.split(/\n/);
+
+    const data_trip = await User.updateOne( { "._id": '623d5b76479555499a43afb4', "privatetrips._id": req.params.id },
+      {
+
+        $set: {
+
+          "privatetrips.$.name": req.body.name,
+          "privatetrips.$.origin": req.body.origin,
+          "privatetrips.$.destiny": req.body.destiny,
+          "privatetrips.$.startDate": req.body.startDate,
+          "privatetrips.$.endDate": req.body.endDate,
+          "privatetrips.$.passengers": req.body.passengers,
+          "privatetrips.$.budget": req.body.budget,
+          "privatetrips.$.wishlist": req.body.wishlist,
+          // "privatetrips.$.nannies": req.body.nannies,
+
+        }
+
+
+      }
+
+    );
+
+    res.status(200).json(data_trip);
+
+
+
+
+  } catch (error) {
+    console.log(error);
   }
 }
 
