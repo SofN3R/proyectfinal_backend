@@ -9,20 +9,17 @@ const userSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  // age: {
-  //   type: Number,
-  //   require: true
-  // },
   privatetrips: [
       {
       name: String,
       origin: String,
       destiny: String,
-      date: Date,
+      startDate: Date,
+      endDate: Date,
       passengers: Number,
       budget: Number,
       wishlist: Array,
-      nannies: Object
+      // nannies: Object
     }
   ]
 

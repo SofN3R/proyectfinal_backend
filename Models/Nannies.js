@@ -42,7 +42,7 @@ const nanniesSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    disp: {
+    available: {
       type: Boolean,
       require: true
     }
