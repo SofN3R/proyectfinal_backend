@@ -45,6 +45,7 @@ const nanniesSchema = mongoose.Schema({
     available: {
       type: Boolean,
       require: true
+
     }
 });
 
