@@ -80,9 +80,9 @@ exports.newPrivTrip = async(req, res) => {
 exports.updatePrivTrips = async(req, res) => {
   try{
 
-    let wish = req.body.wishlist.split(/\n/);
+    // let wish = req.body.wishlist.split(/\n/);
 
-    const data_trip = await User.updateOne( { "._id": '6238e18b52496abe55025a40', "privatetrips._id": '623c7e8ae9fc12d770cb36a0' },
+    const data_trip = await User.updateOne( { "._id": '623c7d958b2e998c352c29c9', "privatetrips._id": req.params.id },
       {
 
         $set: {
@@ -93,7 +93,7 @@ exports.updatePrivTrips = async(req, res) => {
           "privatetrips.$.date": req.body.date,
           "privatetrips.$.passengers": req.body.passengers,
           "privatetrips.$.budget": req.body.budget,
-          "privatetrips.$.wishlist": req.body.wish,
+          "privatetrips.$.wishlist": req.body.wishlist,
           "privatetrips.$.nannies": req.body.nannies,
 
         }
