@@ -1,5 +1,6 @@
 const Nannies = require('../../Models/Nannies.js')
 
+
 exports.showNannies = async(req, res) => {
 
     try {
@@ -12,15 +13,14 @@ exports.showNannies = async(req, res) => {
     }
 }
 
-exports.showNanniesById = async(req, res) =>{
+exports.showNanniesbyCountry = async(req, res) => {
     try {
-      const count = req.body.country.toLowerCase();
-      const dataNanniesId = await Nannies.find({ country: count, disp: true });
-      res.json(dataNanniesId);
-
+        const count = req.params.country.toLowerCase();
+        console.log(count);
+        const dataNanniesId = await Nannies.find({ country: count, available: true });
+        res.json(dataNanniesId);
     } catch (error) {
-        console.log(error);
+     console.log(error);
      res.status(500).send('Hay un error, comuníquese con soporte');
     }
 }
-
