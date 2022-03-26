@@ -8,17 +8,20 @@ const cors = require('cors');
 connect_DB(); // Function connection db
 
 
-app.use(cors());
+// directorio público
+app.use(express.static('public'));
 
-app.use(express.json());
+app.use(cors()); // config cors
+
+app.use(express.json()); // read json body
 
 app.use( '/api/entry', require('./Routes/Entry/getPrivateTrips') );
 app.use('/api/plan', require('./Routes/TourismPlan'));
 app.use('/api/newuser', require('./Routes/Users'));
-app.use('/api/log', require('./Routes/login/userLogin'))
+app.use('/api/log', require('./Routes/login/userLogin'));
 app.use('/api/nannies', require('./Routes/nannies/nannies'));
 
 
 app.listen(3000, () => {
-  console.log("App running in: http://127.0.0.1:3000")
+   console.log("App running in: http://127.0.0.1:3000")
 });

@@ -1,145 +1,152 @@
-  const User = require('../../Models/User');
+const User = require("../../Models/User");
+const bcrypt = require('bcryptjs');
+// Login User
 
-  const jwt = require('jsonwebtoken');
+const login = async( req, res = response ) => {
 
-  exports.newUs = async (req, res) => {
-    try {
-      const { email, password } = req.body;
-      const newUser = new User({email, password});
-      newUser.save();
+   const { email, password } = req.body;
 
-      const token = jwt.sign({ _id: newUser._id }, 'secretkey');
-      res.status(200).json({token});
+   try {
 
-
-
-    } catch (error) {
-
-    }
-
-  }
-
-
-  exports.userAuth = async(req, res) => {
-    try {
-      const { email, password } = req.body;
-      const userLog = await User.findOne({ email: email});
-      // const passDes = cryptr.decrypt(userLog.password);
-      // console.log(passDes);
-      // console.log(userLog._id);
-      if(!userLog) {
-        res.status(401).json({"resp": "Este correo electrónico no está registrado!"});
+      // validate email
+      const userDB = await User.findOne({email});
+      if ( !userDB ) {
+         return res.status(404).json({
+            ok: false,
+            msg: 'Email no valido'
+         })
       }
-      if(userLog.password !== password){
-        res.status(401).json({"resp": "La contraseña es incorrecta"})
-      } // else {
-      //   res.status(200).json(userLog._id);
-      // }
 
-      const token = jwt.sign({ _id: userLog._id }, 'secretkey' );
+      const validatePass = bcrypt.compareSync( password, userDB.password );
+      if ( !validatePass ) {
+         return res.status(400).json({
+            ok: false,
+            msg: 'Contraseña no valida'
+         });
+      }
 
-      return res.status(200).json({token});
+      // generar Token
 
 
-    } catch (error) {
+
+
+      res.json({
+         ok: true,
+         msg: 'OK'
+      });
+
+
+   } catch (error) {
+
       console.log(error);
-    }
+      res.status(500).json({
+         ok: false,
+         msg: 'Error'
+      });
+
+   }
 
 
-  }
-
-
-
-
-
-  exports.tasks = async(req, res) => {
-    try {
-
-
-      res.json([
-
-        {
-          _id: 1,
-          name:'Task One',
-          description: 'Lorem ipsumu',
-          date: "2022-03-14"
-        },
-        {
-          _id: 1,
-          name:'Task Two',
-          description: 'Lorem ipsumu',
-          date: "2022-03-14"
-        },
-        {
-          _id: 1,
-          name:'Task Three',
-          description: 'Lorem ipsumu',
-          date: "2022-03-14"
-        }
-
-      ])
+}
 
 
 
+// method 4 update an user
+const updateUsers = async( req, res = response ) => {
 
-    } catch (error) {
+   // TODO: Validar token comprobar si es el usuario correcto
+
+   const uid = req.params.id;
+
+   try {
+
+      const usuarioDB = await User.findById( uid );
+      if ( !usuarioDB) {
+         res.status(404).json({
+            ok: false,
+            msg: 'No existe un usuario por ese ID'
+         });
+      }
+
+      // actualizar
+      const { password, google, email, ...fields } = req.body;
+
+      if ( usuarioDB.email !== email ) {
+
+         const existsEmail = await User.findOne( { email } )
+         if ( existsEmail ) {
+            return res.status(400).json({
+               ok: false,
+               msg: 'Ya existe un usuario con ese email'
+            });
+         }
+      }
+
+      fields.email = email;
+
+
+      const usUpdate = await User.findByIdAndUpdate( uid, fields, { new: true } );
+
+      res.json({
+         ok: true,
+         user: usUpdate
+      });
+   } catch (error) {
+      console.log( error );
+      res.status(500).json({
+         ok: false,
+         msg: 'Error inesperado'
+      });
+   }
+
+}
+
+// method 4 "delete" an user
+const deleteUser = async (req, res = response ) => {
+
+   const uid = req.params.id;
+
+   try {
+
+      const userDB = await User.findById( uid );
+      if ( !userDB) {
+         res.status(404).json({
+            ok: false,
+            msg: 'No existe un usuario por ese ID'
+         });
+      }
+
+
+      const field = req.body.active;
+
+
+      const usUpdate = await User.findByIdAndUpdate( uid, {active: field}, { new: true } );
+
+
+
+      res.json({
+         ok: true,
+         user: usUpdate
+      });
+
+
+   } catch (error) {
+
       console.log(error);
-    }
+      res.status(500).json({
+         ok: false,
+         msg: 'Error inesperado'
+      });
+   }
 
 
-  }
-  exports.privTasks = async(req, res) => {
-    try {
-
-
-      res.json([
-
-        {
-          _id: 1,
-          name:'Task One p',
-          description: 'Lorem ipsumu',
-          date: "2022-03-14"
-        },
-        {
-          _id: 1,
-          name:'Task Two p',
-          description: 'Lorem ipsumu',
-          date: "2022-03-14"
-        },
-        {
-          _id: 1,
-          name:'Task Three p',
-          description: 'Lorem ipsumu',
-          date: "2022-03-14"
-        }
-
-      ])
+}
 
 
 
+module.exports = {
 
-    } catch (error) {
-      console.log(error);
-    }
-
-
-  }
-
-
-  exports.verifyToken = (req, res, next) => {
-    if(!req.headers.authorization){
-      return res.status(401).send('No auth');
-
-    }
-
-    const token = req.headers.authorization.split(' ')[1];
-    if (token === 'null') {
-      return res.status(401).send('No auth');
-
-    }
-
-    const payload = jwt.verify(token, 'secretkey');
-    req.userId = payload._id;
-    next();
-
-  }
+   updateUsers,
+   deleteUser,
+   login
+}
