@@ -1,28 +1,32 @@
 const User = require('../Models/User');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs')
+// const bcrypt = require('bcryptjs')
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotalySecretKey');
 const key = 'Soficrisluz22'
 
 exports.CreateUser = async(req, res,)=>{
     try {
         let NewUser;
         NewUser = new User(req.body)
-        NewUser.password= bcrypt.hashSync(req.body.password)
+        // NewUser.password= bcrypt.hashSync(req.body.password)
+        // let encryPass = cryptr.encrypt(req.body.password);
         await NewUser.save();
-            const expiresIn = 24 * 60 * 60;
-            const accessToken = jwt.sign({id: NewUser.id},
-                key,{
-                    expiresIn : expiresIn
-                });
-                const responseuser ={
-                    name: NewUser.name,
-                    lastname : NewUser.lastname,
-                    email : NewUser.email,
-                    password : NewUser.password,
-                    accessToken : accessToken,
-                    expiresIn : expiresIn
-                }
-                res.send(responseuser)
+        const expiresIn = 24 * 60 * 60;
+        const accessToken = jwt.sign({id: NewUser.id},
+            key,{
+                expiresIn : expiresIn
+            });
+            const responseuser ={
+                name: NewUser.name,
+                lastname : NewUser.lastname,
+                email : NewUser.email,
+                password : NewUser.password,
+                accessToken : accessToken,
+                expiresIn : expiresIn
+            }
+            res.send(responseuser);
+          console.log(accessToken);
 
 
     } catch (error) {

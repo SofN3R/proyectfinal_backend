@@ -15,8 +15,7 @@ app.use(express.json());
 app.use( '/api/entry', require('./Routes/Entry/getPrivateTrips') );
 app.use('/api/plan', require('./Routes/TourismPlan'));
 app.use('/api/newuser', require('./Routes/Users'));
-
-
+app.use('/api/log', require('./Routes/login/userLogin'))
 app.use('/api/nannies', require('./Routes/nannies/nannies'));
 
 
