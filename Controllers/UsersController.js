@@ -4,11 +4,19 @@ const bcrypt = require('bcryptjs')
 const key = 'Soficrisluz22'
 
 exports.CreateUser = async(req, res,)=>{
+        const {email} = req.body;
     try {
-        let NewUser;
-        NewUser = new User(req.body)
-        NewUser.password= bcrypt.hashSync(req.body.password)
-        await NewUser.save();
+        const emailexist = await User.findOne({email});
+        if(emailexist){
+            return res.status(400).json({
+                msg:"Usuario existe"
+        })
+    }
+        else{
+            let NewUser;
+            NewUser = new User(req.body)
+            NewUser.password= bcrypt.hashSync(req.body.password)
+            await NewUser.save();
             const expiresIn = 24 * 60 * 60;
             const accessToken = jwt.sign({id: NewUser.id},
                 key,{
@@ -24,7 +32,7 @@ exports.CreateUser = async(req, res,)=>{
                 }
                 res.send(responseuser)
 
-
+            }
     } catch (error) {
         console.error(error);
         res.status(500).send("Error 500")
