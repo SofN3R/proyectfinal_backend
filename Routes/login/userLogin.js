@@ -10,6 +10,8 @@ const router = express.Router();
 
 const { updateUsers, deleteUser, login } = require('../../Controllers/login/userLoginController');
 const { validateFields } = require('../../middlewares/validateFields');
+const { validateJWT } = require('../../middlewares/validateJWT');
+
 
 // Login User
 router.post('/',
@@ -28,6 +30,7 @@ router.post('/',
 // UPDATE USER
 router.put('/:id',
    [
+      validateJWT,
       check('name', 'El nombre es obligatorio').not().isEmpty(),
       check('lastname', 'El apellido es obligatorio').not().isEmpty(),
       check('email', 'El email es obligatorio').isEmail(),
@@ -39,7 +42,7 @@ router.put('/:id',
 );
 
 // delete user
-router.delete('/:id', deleteUser);
+router.delete('/:id', validateJWT , deleteUser);
 
 
 

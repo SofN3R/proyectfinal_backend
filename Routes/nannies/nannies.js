@@ -3,9 +3,12 @@ const express = require ('express');
 const router = express.Router();
 
 const showNannies = require('../../Controllers/Nannies/nanniesController');
+const { validateJWT } = require('../../middlewares/validateJWT');
 
-router.get('/', showNannies.showNannies);
-router.get('/:country', showNannies.showNanniesbyCountry);
+
+
+router.get('/', validateJWT , showNannies.showNannies);
+router.get('/:country', validateJWT ,showNannies.showNanniesbyCountry);
 
 
 

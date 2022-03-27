@@ -38,7 +38,7 @@ const userSchema = mongoose.Schema({
 
    active: {
       type: Boolean,
-      require: false
+      default: true
    },
 
    date_cre:{

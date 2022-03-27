@@ -3,14 +3,15 @@ const express = require('express');
 const router = express.Router();
 
 const privTripsControl = require('../../Controllers/Entry/privTripsController');
-
-router.get('/', privTripsControl.consultPrivTrips);
-
-router.get('/:id', privTripsControl.getTripById);
+const { validateJWT } = require('../../middlewares/validateJWT');
 
 
-router.post('/', privTripsControl.newPrivTrip);
+router.get('/', validateJWT, privTripsControl.consultPrivTrips);
 
-router.put('/:id',  privTripsControl.updatePrivTrips);
+router.get('/:id', validateJWT , privTripsControl.getTripById);
+
+router.post('/', validateJWT , privTripsControl.newPrivTrip);
+
+router.put('/:id', validateJWT ,privTripsControl.updatePrivTrips);
 
 module.exports = router;
