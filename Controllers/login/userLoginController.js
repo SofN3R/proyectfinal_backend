@@ -59,7 +59,7 @@ const logGoogle = async( req, res = response ) => {
    try {
 
 
-      const { name, email, picture } = await googleVerify( googleToken );
+      const { name, email } = await googleVerify( googleToken );
 
       const userDB = await User.findOne({ email });
       let user;
@@ -88,7 +88,7 @@ const logGoogle = async( req, res = response ) => {
       await user.save();
 
       // generar JWT
-      const token = await generateJWT( user._id );
+      const token = await generateJWT( userDB._id );
 
 
       res.json({
@@ -110,7 +110,20 @@ const logGoogle = async( req, res = response ) => {
 
 }
 
+// renew token
+const renewToken = async (req, res=response) => {
 
+   const uid = req.uid;
+
+   const token = await generateJWT( uid );
+
+
+   res.json({
+      ok:true,
+      token
+   })
+
+}
 
 // method 4 update an user
 const updateUsers = async( req, res = response ) => {
@@ -210,5 +223,6 @@ module.exports = {
    updateUsers,
    deleteUser,
    login,
-   logGoogle
+   logGoogle,
+   renewToken
 }
