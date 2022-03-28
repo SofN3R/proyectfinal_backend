@@ -61,9 +61,39 @@ const logGoogle = async( req, res = response ) => {
 
       const { name, email, picture } = await googleVerify( googleToken );
 
+      const userDB = await User.findOne({ email });
+      let user;
+
+      if( !userDB ) {
+         user = new User({
+            name: name,
+            lastname: '',
+            email,
+            telephone: 0,
+            password: '@@@',
+            role: "cliente",
+            // img: picture,
+            google: true
+
+         });
+      } else {
+         // existe usuario
+         user = userDB ;
+         user.google = true;
+         // user.google = true;
+
+      }
+
+      // guardar en bd
+      await user.save();
+
+      // generar JWT
+      const token = await generateJWT( user._id );
+
+
       res.json({
          ok: true,
-         name, email, picture
+         token
       });
 
 
