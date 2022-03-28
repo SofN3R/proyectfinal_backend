@@ -1,6 +1,7 @@
 const User = require("../../Models/User");
 const bcrypt = require('bcryptjs');
 const { generateJWT } = require("../../helpers/jwt");
+const { googleVerify } = require("../../helpers/googleVerify");
 // Login User
 
 const login = async( req, res = response ) => {
@@ -43,6 +44,35 @@ const login = async( req, res = response ) => {
       res.status(500).json({
          ok: false,
          msg: 'Error'
+      });
+
+   }
+
+
+}
+
+// login Google
+const logGoogle = async( req, res = response ) => {
+
+   const googleToken = req.body.token;
+
+   try {
+
+
+      const { name, email, picture } = await googleVerify( googleToken );
+
+      res.json({
+         ok: true,
+         name, email, picture
+      });
+
+
+   } catch (error) {
+
+      console.log(error);
+      res.status(401).json({
+         ok: false,
+         msg: 'Token no es correcto'
       });
 
    }
@@ -149,5 +179,6 @@ module.exports = {
 
    updateUsers,
    deleteUser,
-   login
+   login,
+   logGoogle
 }

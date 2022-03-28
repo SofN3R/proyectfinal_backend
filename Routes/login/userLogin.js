@@ -8,7 +8,7 @@ const { check } = require('express-validator');
 
 const router = express.Router();
 
-const { updateUsers, deleteUser, login } = require('../../Controllers/login/userLoginController');
+const { updateUsers, deleteUser, login, logGoogle } = require('../../Controllers/login/userLoginController');
 const { validateFields } = require('../../middlewares/validateFields');
 const { validateJWT } = require('../../middlewares/validateJWT');
 
@@ -25,6 +25,20 @@ router.post('/',
    ],
    login
 );
+
+// login Google
+router.post('/google',
+   [
+
+      check('token', 'El token es obligatoria').not().isEmpty(),
+      validateFields
+
+
+   ],
+   logGoogle
+);
+
+
 
 
 // UPDATE USER

@@ -6,11 +6,13 @@ const privTripsControl = require('../../Controllers/Entry/privTripsController');
 const { validateJWT } = require('../../middlewares/validateJWT');
 
 
-router.get('/', validateJWT, privTripsControl.consultPrivTrips);
+router.get('/', privTripsControl.consultPrivTrips);
+
+
 
 router.get('/:id', validateJWT , privTripsControl.getTripById);
 
-router.post('/', validateJWT , privTripsControl.newPrivTrip);
+router.post('/', privTripsControl.newPrivTrip);
 
 router.put('/:id', validateJWT ,privTripsControl.updatePrivTrips);
 

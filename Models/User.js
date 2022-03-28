@@ -41,6 +41,8 @@ const userSchema = mongoose.Schema({
       default: true
    },
 
+
+
    date_cre:{
       type: Date,
       default: Date.now()
@@ -58,9 +60,12 @@ const userSchema = mongoose.Schema({
          passengers: Number,
          budget: Number,
          wishlist: Array,
+         public: {type: String, default: "false"}
          // nannies: Object
       }
+
    ]
+
 
 
 });
