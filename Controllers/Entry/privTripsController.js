@@ -5,16 +5,17 @@ const User = require('../../Models/User');
 exports.consultPrivTrips = async(req, res) => {
    try {
 
-      const data_trip = await User.findById( '6240c38d67570762672267b2' );
+      const data_trip = await User.findById( req.params.id );
+
       res.json( data_trip.privatetrips );
 
    } catch (error) {
       console.log( error );
       res.status(500).send("Oops! Error");
    }
-   }
+}
 
-   exports.getTripById = async(req, res) => {
+exports.getTripById = async(req, res) => {
 
    try {
 
@@ -40,7 +41,7 @@ exports.newPrivTrip = async(req, res) => {
    try {
 
       let id_user = {
-         _id: '6240c38d67570762672267b2' // falta traer id del usuario que inicia sesión
+         _id: req.params.id // falta traer id del usuario que inicia sesión
       }
 
       let options = {
@@ -62,8 +63,7 @@ exports.newPrivTrip = async(req, res) => {
             endDate: req.body.endDate,
             passengers: req.body.passengers,
             budget: req.body.budget,
-            wishlist: req.body.wishlist,
-
+            wishlist: wish
             // nannies: req.body.nannies
          }
          }
