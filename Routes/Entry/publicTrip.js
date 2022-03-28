@@ -9,12 +9,12 @@ const express = require('express');
 
 const router = express.Router();
 
-const publicTrip = require('../../Controllers/Entry/publicTripController');
+const {getAllPublic, postTrip} = require('../../Controllers/Entry/publicTripController');
 
 
+router.get('/', getAllPublic);
 
-
-router.put('/:id', publicTrip.postTrip);
+router.put('/:id', postTrip);
 
 
 module.exports = router;

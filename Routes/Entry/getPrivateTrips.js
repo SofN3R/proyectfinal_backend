@@ -14,6 +14,6 @@ router.get('/:id', validateJWT , privTripsControl.getTripById);
 
 router.post('/', privTripsControl.newPrivTrip);
 
-router.put('/:id', validateJWT ,privTripsControl.updatePrivTrips);
+router.put('/:id' ,privTripsControl.updatePrivTrips);
 
 module.exports = router;

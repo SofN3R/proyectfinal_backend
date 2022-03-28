@@ -5,7 +5,7 @@ const User = require('../../Models/User');
 exports.consultPrivTrips = async(req, res) => {
    try {
 
-      const data_trip = await User.findById( '623f6667f797241658a16188' );
+      const data_trip = await User.findById( '6240c38d67570762672267b2' );
       res.json( data_trip.privatetrips );
 
    } catch (error) {
@@ -18,7 +18,7 @@ exports.consultPrivTrips = async(req, res) => {
 
    try {
 
-      const data_trip = await User.findById( '623f6667f797241658a1618' );
+      const data_trip = await User.findById( '6240c38d67570762672267b2' );
 
       for(let i in data_trip.privatetrips){
          if(data_trip.privatetrips[i]._id == req.params.id){
@@ -40,7 +40,7 @@ exports.newPrivTrip = async(req, res) => {
    try {
 
       let id_user = {
-         _id: '623f6667f797241658a16188' // falta traer id del usuario que inicia sesión
+         _id: '6240c38d67570762672267b2' // falta traer id del usuario que inicia sesión
       }
 
       let options = {
@@ -87,7 +87,7 @@ exports.updatePrivTrips = async(req, res) => {
 
       // let wish = req.body.wishlist.split(/\n/);
 
-      const data_trip = await User.updateOne( { "._id": '623f6667f797241658a1618', "privatetrips._id": req.params.id },
+      const data_trip = await User.updateOne( { "._id": '6240c38d67570762672267b2', "privatetrips._id": req.params.id },
          {
 
          $set: {
