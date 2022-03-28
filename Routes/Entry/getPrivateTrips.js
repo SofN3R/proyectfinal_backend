@@ -11,6 +11,6 @@ router.get('/:id', validateJWT,privTripsControl.consultPrivTrips);
 
 router.post('/:id', validateJWT,privTripsControl.newPrivTrip);
 
-router.put('/:id' ,privTripsControl.updatePrivTrips);
+router.put('/:idus/:idtrip', validateJWT, privTripsControl.updatePrivTrips);
 
 module.exports = router;

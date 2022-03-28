@@ -8,7 +8,7 @@ const postTrip = async(req, res = response ) => {
 
    try{
 
-      const data_trip = await User.updateOne( { "._id": '623f6667f797241658a16188', "privatetrips._id": req.params.id },
+      const data_trip = await User.updateOne( { "._id": req.params.idus, "privatetrips._id": req.params.idpub },
          {
             $set: {
                "privatetrips.$.public": req.body.resp,

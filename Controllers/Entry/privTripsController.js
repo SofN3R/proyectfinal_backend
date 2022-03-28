@@ -85,9 +85,10 @@ exports.newPrivTrip = async(req, res) => {
 exports.updatePrivTrips = async(req, res) => {
    try{
 
+      console.log(req.params);
       // let wish = req.body.wishlist.split(/\n/);
 
-      const data_trip = await User.updateOne( { "._id": '6240c38d67570762672267b2', "privatetrips._id": req.params.id },
+      const data_trip = await User.updateOne( { "._id": req.params.idus , "privatetrips._id": req.params.idtrip },
          {
 
          $set: {
