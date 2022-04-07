@@ -1,8 +1,9 @@
 const User = require('../Models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs')
-const key = 'Soficrisluz22'
 
+
+// Create new User
 exports.CreateUser = async(req, res,)=>{
       try {
          let NewUser;
@@ -11,7 +12,7 @@ exports.CreateUser = async(req, res,)=>{
          await NewUser.save();
          const expiresIn = 24 * 60 * 60;
          const accessToken = jwt.sign({id: NewUser.id},
-               key,{
+               process.env.JWT_SECRET,{
                   expiresIn : expiresIn
                });
                const responseuser ={
@@ -32,6 +33,7 @@ exports.CreateUser = async(req, res,)=>{
 
 }
 
+// Get all users
 exports.VisualizerUsers = async(req, res)=>{
       try {
          const get_users = await User.find();
@@ -42,12 +44,3 @@ exports.VisualizerUsers = async(req, res)=>{
       }
 }
 
-// exports.LoginUser = async(req, res)=>{
-//     let loginUser;
-//     loginUser = new User(req.body)
-//     loginUser.findOne({email : loginUser.email})
-
-
-
-
-// }

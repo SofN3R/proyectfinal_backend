@@ -2,8 +2,8 @@ const User = require("../../Models/User");
 const bcrypt = require('bcryptjs');
 const { generateJWT } = require("../../helpers/jwt");
 const { googleVerify } = require("../../helpers/googleVerify");
-// Login User
 
+// Login User
 const login = async( req, res = response ) => {
 
    const { email, password } = req.body;
@@ -118,7 +118,7 @@ const renewToken = async (req, res=response) => {
    const token = await generateJWT( uid );
 
    const usLog = await User.findById( uid );
-   console.log(usLog);
+
 
    res.json({
       ok:true,

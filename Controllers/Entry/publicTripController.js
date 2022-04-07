@@ -3,7 +3,7 @@ const { response } = require('express');
 
 const User = require('../../Models/User');
 
-
+// make public a trip
 const postTrip = async(req, res = response ) => {
 
    try{
@@ -38,6 +38,8 @@ const getAllPublic = async(req, res= response ) => {
    try {
 
       const allPublic = await User.find( { "privatetrips.public": "true" } );
+
+
       let arry = [];
       for(let i in allPublic){
          for( let j in allPublic[i].privatetrips ){
@@ -47,7 +49,7 @@ const getAllPublic = async(req, res= response ) => {
             }
          }
       }
-      // console.log(arry);
+
       res.send(arry);
 
 

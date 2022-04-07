@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const modelTourism_plan = mongoose.Schema ({
 
+Country: {
+   type: String,
+   require: true
+},
+
 Place_name:{
     type : String,
     require : true
