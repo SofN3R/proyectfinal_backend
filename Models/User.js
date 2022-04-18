@@ -53,6 +53,7 @@ const userSchema = mongoose.Schema({
    privatetrips: [
          {
          name: String,
+         img: String,
          origin: String,
          destiny: String,
          startDate: Date,
@@ -61,7 +62,6 @@ const userSchema = mongoose.Schema({
          budget: Number,
          wishlist: Array,
          public: {type: String, default: "false"}
-         // nannies: Object
       }
 
    ]
