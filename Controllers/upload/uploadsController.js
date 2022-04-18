@@ -3,6 +3,8 @@ const { v4: uuidv4 } = require('uuid');
 const { updateImage } = require('../../helpers/updateImg');
 const User = require('../../Models/User');
 
+const path = require('path');
+const fs = require('fs');
 
 
 const putImg = async( req, res = response ) => {
@@ -70,6 +72,25 @@ const putImg = async( req, res = response ) => {
 }
 
 
+const returnImage = ( req, res = response ) => {
+
+   const photo = req.params.idimg;
+
+   const pathImg = path.join( __dirname, `../../uploads/tripimg/${ photo }` );
+
+   // default image
+   if ( fs.existsSync( pathImg ) ) {
+      res.sendFile( pathImg );
+
+   } else {
+      const pathImg = path.join( __dirname, `../../uploads/imagen-default/imgdefa.png` );
+      res.sendFile( pathImg );
+   }
+
+
+}
+
 module.exports = {
-   putImg
+   putImg,
+   returnImage
 }

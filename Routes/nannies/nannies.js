@@ -2,14 +2,14 @@ const express = require ('express');
 
 const router = express.Router();
 
-const showNannies = require('../../Controllers/Nannies/nanniesController');
+const {showNannies, showNanniesbyCountry, showNanniesByID} = require('../../Controllers/Nannies/nanniesController');
 const { validateJWT } = require('../../middlewares/validateJWT');
 
 
 
-router.get('/', validateJWT , showNannies.showNannies);
-router.get('/:country', validateJWT ,showNannies.showNanniesbyCountry);
-
+router.get('/', validateJWT , showNannies);
+router.get('/:country', validateJWT ,showNanniesbyCountry);
+router.get('/id/:idnana', validateJWT, showNanniesByID);
 
 
 

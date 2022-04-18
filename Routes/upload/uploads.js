@@ -12,11 +12,13 @@ const { validateJWT } = require('../../middlewares/validateJWT');
 
 const router = Router();
 
-const { putImg } = require('../../Controllers/upload/uploadsController');
+const { putImg, returnImage } = require('../../Controllers/upload/uploadsController');
 
 router.use(fileUpload());
 
-router.put('/:idus/:idtrip', validateJWT, putImg);
+router.get('/:idus/:idtrip', validateJWT, putImg);
+
+router.get('/:idimg', returnImage);
 
 
 module.exports = router;

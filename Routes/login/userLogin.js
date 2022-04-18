@@ -38,7 +38,7 @@ router.post('/google',
    logGoogle
 );
 
-//
+// Renew Token
 router.get('/renew', validateJWT, renewToken);
 
 // UPDATE USER

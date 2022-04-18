@@ -26,3 +26,23 @@ exports.showNanniesbyCountry = async(req, res) => {
       }
 
 }
+
+
+
+exports.showNanniesByID = async ( req, res ) => {
+
+   const idNana = req.params.idnana;
+
+   try {
+
+      const dataNana = await Nannies.findById( idNana );
+
+      res.json(dataNana);
+
+
+
+   } catch (error) {
+
+   }
+
+}
